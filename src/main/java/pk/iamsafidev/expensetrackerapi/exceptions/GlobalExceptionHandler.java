@@ -39,5 +39,5 @@ public class GlobalExceptionHandler {
         errorObject.setTimeStamp(new Date());
         return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    
+
 }
