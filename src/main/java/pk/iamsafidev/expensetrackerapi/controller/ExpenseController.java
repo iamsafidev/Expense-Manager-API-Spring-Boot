@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import pk.iamsafidev.expensetrackerapi.entity.Expense;
 import pk.iamsafidev.expensetrackerapi.service.ExpenseService;
 
+import java.util.List;
+
 
 @RestController
 public class ExpenseController {
@@ -40,5 +42,10 @@ public class ExpenseController {
     @PutMapping("/expenses/{id}")
     public Expense updateExpenseDetails(@RequestBody Expense expense, @PathVariable Long id) {
         return expenseService.updateExpenseDetails(id, expense);
+    }
+
+    @GetMapping("/expenses/category")
+    public List<Expense> getExpensesByCategory(@RequestParam String category, Pageable page){
+       return  expenseService.readByCategory(category,page);
     }
 }

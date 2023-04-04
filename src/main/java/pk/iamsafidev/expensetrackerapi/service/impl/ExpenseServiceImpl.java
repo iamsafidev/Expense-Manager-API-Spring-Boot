@@ -9,6 +9,7 @@ import pk.iamsafidev.expensetrackerapi.exceptions.ResourceNotFoundException;
 import pk.iamsafidev.expensetrackerapi.repository.ExpenseRepository;
 import pk.iamsafidev.expensetrackerapi.service.ExpenseService;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -55,5 +56,10 @@ public class ExpenseServiceImpl implements ExpenseService {
         existingExpense.setAmount(expense.getAmount() != null ? expense.getAmount() : existingExpense.getAmount());
         existingExpense.setDate(expense.getDate() != null ? expense.getDate() : existingExpense.getDate());
         return expenseRepository.save(existingExpense);
+    }
+
+    @Override
+    public List<Expense> readByCategory(String category, Pageable pageable) {
+        return expenseRepository.findByCategory(category,pageable).toList();
     }
 }

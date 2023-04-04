@@ -4,6 +4,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import pk.iamsafidev.expensetrackerapi.entity.Expense;
 
+import java.util.List;
+
 public interface ExpenseService {
     Page<Expense> getAllExpenses(Pageable page);
     Expense getExpenseById(Long id);
@@ -13,4 +15,6 @@ public interface ExpenseService {
     Expense saveExpenseDetails(Expense expense);
 
     Expense updateExpenseDetails(Long id, Expense expense);
+
+    List<Expense> readByCategory(String category, Pageable pageable);
 }
