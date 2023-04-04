@@ -1,6 +1,7 @@
 package pk.iamsafidev.expensetrackerapi.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pk.iamsafidev.expensetrackerapi.entity.Expense;
 import pk.iamsafidev.expensetrackerapi.service.ExpenseService;
@@ -23,11 +24,13 @@ public class ExpenseController {
     }
 
     @DeleteMapping("/expenses")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteExpenseById(@RequestParam("id") Long id) {
         expenseService.deleteExpenseById(id);
     }
 
     @PostMapping("/expenses")
+    @ResponseStatus(value = HttpStatus.CREATED)
     public Expense saveExpenseDetails(@RequestBody Expense expense) {
         return expenseService.saveExpenseDetails(expense);
     }
