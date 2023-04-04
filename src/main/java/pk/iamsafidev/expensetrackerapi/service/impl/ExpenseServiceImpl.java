@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pk.iamsafidev.expensetrackerapi.entity.Expense;
-import pk.iamsafidev.expensetrackerapi.exceptions.ExpenseNotFoundException;
+import pk.iamsafidev.expensetrackerapi.exceptions.ResourceNotFoundException;
 import pk.iamsafidev.expensetrackerapi.repository.ExpenseRepository;
 import pk.iamsafidev.expensetrackerapi.service.ExpenseService;
 
@@ -33,7 +33,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         if (expense.isPresent()) {
             return expense.get();
         }
-        throw new ExpenseNotFoundException("Expense is not found for id " + id);
+        throw new ResourceNotFoundException("Expense is not found for id " + id);
     }
 
     @Override
