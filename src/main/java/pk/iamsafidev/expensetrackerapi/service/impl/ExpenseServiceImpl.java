@@ -13,16 +13,16 @@ import java.util.Optional;
 public class ExpenseServiceImpl implements ExpenseService {
 
     @Autowired
-    private ExpenseRepository repository;
+    private ExpenseRepository expenseRepository;
 
     @Override
     public List<Expense> getAllExpenses() {
-        return repository.findAll();
+        return expenseRepository.findAll();
     }
 
     @Override
     public Expense getExpenseById(Long id) {
-        Optional<Expense> expense = repository.findById(id);
+        Optional<Expense> expense = expenseRepository.findById(id);
         if (expense.isPresent()) {
             return expense.get();
         }
@@ -31,11 +31,22 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public void deleteExpenseById(Long id) {
-        repository.deleteById(id);
+        expenseRepository.deleteById(id);
     }
 
     @Override
     public Expense saveExpenseDetails(Expense expense) {
-        return repository.save(expense);
+        return expenseRepository.save(expense);
+    }
+
+    @Override
+    public Expense updateExpenseDetails(Long id, Expense expense) {
+        Expense existingExpense = getExpenseById(id);
+        existingExpense.setName(expense.getName() != null ? expense.getName() : existingExpense.getName());
+        existingExpense.setDescription(expense.getDescription() != null ? expense.getDescription() : existingExpense.getDescription());
+        existingExpense.setCategory(expense.getCategory() != null ? expense.getCategory() : existingExpense.getCategory());
+        existingExpense.setAmount(expense.getAmount() != null ? expense.getAmount() : existingExpense.getAmount());
+        existingExpense.setDate(expense.getDate() != null ? expense.getDate() : existingExpense.getDate());
+        return expenseRepository.save(existingExpense);
     }
 }
