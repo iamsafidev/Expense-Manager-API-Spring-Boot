@@ -1,12 +1,11 @@
 package pk.iamsafidev.expensetrackerapi.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import pk.iamsafidev.expensetrackerapi.entity.Expense;
 
-import java.util.List;
-import java.util.stream.LongStream;
-
 public interface ExpenseService {
-    List<Expense> getAllExpenses();
+    Page<Expense> getAllExpenses(Pageable page);
     Expense getExpenseById(Long id);
 
     void deleteExpenseById(Long id);
