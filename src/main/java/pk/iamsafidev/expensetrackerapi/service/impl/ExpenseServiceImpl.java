@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pk.iamsafidev.expensetrackerapi.entity.Expense;
+import pk.iamsafidev.expensetrackerapi.exceptions.ExpenseNotFoundException;
 import pk.iamsafidev.expensetrackerapi.repository.ExpenseRepository;
 import pk.iamsafidev.expensetrackerapi.service.ExpenseService;
 
@@ -18,7 +19,11 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public Page<Expense> getAllExpenses(Pageable page) {
+        // For Pagination
         //expenses?size=2&page=2
+
+        //    For Sorting
+        //expenses?sort=amount,desc
         return expenseRepository.findAll(page);
     }
 
@@ -28,7 +33,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         if (expense.isPresent()) {
             return expense.get();
         }
-        throw new RuntimeException("Expense is not found for id " + id);
+        throw new ExpenseNotFoundException("Expense is not found for id " + id);
     }
 
     @Override
