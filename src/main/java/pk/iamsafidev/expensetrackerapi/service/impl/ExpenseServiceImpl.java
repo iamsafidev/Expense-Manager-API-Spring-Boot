@@ -62,4 +62,9 @@ public class ExpenseServiceImpl implements ExpenseService {
     public List<Expense> readByCategory(String category, Pageable pageable) {
         return expenseRepository.findByCategory(category,pageable).toList();
     }
+
+    @Override
+    public List<Expense> readByName(String name, Pageable pageable) {
+        return expenseRepository.findByNameContaining(name,pageable).toList();
+    }
 }

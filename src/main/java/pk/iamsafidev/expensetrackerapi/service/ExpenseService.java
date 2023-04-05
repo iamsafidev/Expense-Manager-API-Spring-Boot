@@ -17,4 +17,6 @@ public interface ExpenseService {
     Expense updateExpenseDetails(Long id, Expense expense);
 
     List<Expense> readByCategory(String category, Pageable pageable);
+
+    List<Expense> readByName(String name, Pageable pageable);
 }
