@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import pk.iamsafidev.expensetrackerapi.entity.User;
 import pk.iamsafidev.expensetrackerapi.entity.UserModel;
 import pk.iamsafidev.expensetrackerapi.exceptions.ItemAlreadyExistsException;
+import pk.iamsafidev.expensetrackerapi.exceptions.ResourceNotFoundException;
 import pk.iamsafidev.expensetrackerapi.repository.UserRepository;
 import pk.iamsafidev.expensetrackerapi.service.UserService;
 
@@ -21,5 +22,10 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         BeanUtils.copyProperties(userModel, user);
         return userRepository.save(user);
+    }
+
+    @Override
+    public User read(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found for id :" + id));
     }
 }

@@ -6,4 +6,6 @@ import pk.iamsafidev.expensetrackerapi.entity.UserModel;
 public interface UserService {
 
     User createUser(UserModel user);
+
+    User read(Long id);
 }
