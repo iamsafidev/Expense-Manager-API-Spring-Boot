@@ -8,6 +8,7 @@ import pk.iamsafidev.expensetrackerapi.entity.Expense;
 import pk.iamsafidev.expensetrackerapi.exceptions.ResourceNotFoundException;
 import pk.iamsafidev.expensetrackerapi.repository.ExpenseRepository;
 import pk.iamsafidev.expensetrackerapi.service.ExpenseService;
+import pk.iamsafidev.expensetrackerapi.service.UserService;
 
 import java.util.Date;
 import java.util.List;
@@ -19,6 +20,8 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Autowired
     private ExpenseRepository expenseRepository;
 
+    @Autowired
+    private UserService userService;
     @Override
     public Page<Expense> getAllExpenses(Pageable page) {
         // For Pagination
@@ -46,6 +49,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public Expense saveExpenseDetails(Expense expense) {
+        expense.setUser(userService.getLoggedInUser());
         return expenseRepository.save(expense);
     }
 
