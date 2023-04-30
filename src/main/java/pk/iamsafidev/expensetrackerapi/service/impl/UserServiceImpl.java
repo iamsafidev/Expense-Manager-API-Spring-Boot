@@ -33,13 +33,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User read(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found for id :" + id));
+    public User read() {
+        Long userId = getLoggedInUser().getId();
+        return userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found for id :" + userId));
     }
 
     @Override
-    public User update(User user, Long id) {
-        User existingUser = read(id);
+    public User update(User user) {
+        User existingUser = read();
         existingUser.setName(user.getName() != null ? user.getName() : existingUser.getName());
         existingUser.setEmail(user.getEmail() != null ? user.getEmail() : existingUser.getEmail());
         existingUser.setPassword(user.getPassword() != null ? passwordEncoder.encode(user.getPassword()) : existingUser.getPassword());
@@ -48,8 +49,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(Long id) {
-        User user = read(id);
+    public void delete() {
+        User user = read();
         userRepository.delete(user);
     }
 
