@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import pk.iamsafidev.expensetrackerapi.entity.Expense;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Repository
 public interface ExpenseRepository extends JpaRepository<Expense,Long> {
@@ -21,4 +22,6 @@ public interface ExpenseRepository extends JpaRepository<Expense,Long> {
     public Page<Expense> findByDateBetween(Date startDate, Date endDate, Pageable pageable);
 
     Page<Expense> findByUserId(Long userId,Pageable page);
+
+    Optional<Expense> findByUserIdAndId(Long userId, Long expenseId);
 }
