@@ -66,12 +66,12 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public List<Expense> readByCategory(String category, Pageable pageable) {
-        return expenseRepository.findByCategory(category, pageable).toList();
+        return expenseRepository.findByUserIdAndCategory(userService.getLoggedInUser().getId(),category, pageable).toList();
     }
 
     @Override
     public List<Expense> readByName(String name, Pageable pageable) {
-        return expenseRepository.findByNameContaining(name, pageable).toList();
+        return expenseRepository.findByUserIdAndNameContaining(userService.getLoggedInUser().getId(),name, pageable).toList();
     }
 
     @Override
@@ -80,6 +80,6 @@ public class ExpenseServiceImpl implements ExpenseService {
             startDate = new Date(0);
         if (endDate == null)
             endDate = new Date(System.currentTimeMillis());
-        return expenseRepository.findByDateBetween(startDate, endDate, pageable).toList();
+        return expenseRepository.findByUserIdAndDateBetween(userService.getLoggedInUser().getId(),startDate, endDate, pageable).toList();
     }
 }
