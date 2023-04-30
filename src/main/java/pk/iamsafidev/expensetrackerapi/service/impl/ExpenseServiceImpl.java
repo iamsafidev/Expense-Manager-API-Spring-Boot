@@ -29,7 +29,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
         //    For Sorting
         //expenses?sort=amount,desc
-        return expenseRepository.findAll(page);
+        return expenseRepository.findByUserId(userService.getLoggedInUser().getId(),page);
     }
 
     @Override
