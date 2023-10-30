@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import pk.iamsafidev.expensetrackerapi.security.CustomUserDetailsService;
+import pk.iamsafidev.expensetrackerapi.security.JwtRequestFilter;
 
 @Configuration
 public class WebSecurityConfig {
@@ -30,15 +31,15 @@ public class WebSecurityConfig {
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-      //  httpSecurity.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         httpSecurity.httpBasic();
         return httpSecurity.build();
     }
 
-//    @Bean
-//    public Filter authenticationJwtTokenFilter() {
-//        return new JwtRequestFilter();
-//    }
+    @Bean
+    public Filter authenticationJwtTokenFilter() {
+        return new JwtRequestFilter();
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
