@@ -4,9 +4,11 @@ import jakarta.servlet.Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +19,7 @@ import pk.iamsafidev.expensetrackerapi.security.CustomUserDetailsService;
 import pk.iamsafidev.expensetrackerapi.security.JwtRequestFilter;
 
 @Configuration
+@EnableMethodSecurity
 public class WebSecurityConfig {
 
     @Autowired
@@ -26,7 +29,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf().disable().
-                authorizeRequests()
+                authorizeHttpRequests()
                 .requestMatchers("/login", "/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
