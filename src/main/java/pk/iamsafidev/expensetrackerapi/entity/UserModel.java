@@ -17,4 +17,6 @@ public class UserModel {
     @Size(min = 5, message = "Password should atleast 5 characters")
     private String password;
     private Long age = 0L;
+    @NotNull(message = "Please enter Role Name")
+    private String roleName;
 }

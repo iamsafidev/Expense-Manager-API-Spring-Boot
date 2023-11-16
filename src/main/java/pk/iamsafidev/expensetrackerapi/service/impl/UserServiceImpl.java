@@ -9,15 +9,22 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pk.iamsafidev.expensetrackerapi.entity.User;
 import pk.iamsafidev.expensetrackerapi.entity.UserModel;
+import pk.iamsafidev.expensetrackerapi.entity.UserRoles;
 import pk.iamsafidev.expensetrackerapi.exceptions.ItemAlreadyExistsException;
 import pk.iamsafidev.expensetrackerapi.exceptions.ResourceNotFoundException;
 import pk.iamsafidev.expensetrackerapi.repository.UserRepository;
+import pk.iamsafidev.expensetrackerapi.repository.UserRoleRepository;
 import pk.iamsafidev.expensetrackerapi.service.UserService;
+
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserRoleRepository userRoleRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -29,6 +36,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         BeanUtils.copyProperties(userModel, user);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setUserRole(new UserRoles(userModel.getRoleName()));
         return userRepository.save(user);
     }
 

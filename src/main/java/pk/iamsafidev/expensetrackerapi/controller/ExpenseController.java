@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pk.iamsafidev.expensetrackerapi.entity.Expense;
 import pk.iamsafidev.expensetrackerapi.service.ExpenseService;
@@ -18,7 +19,7 @@ import java.util.List;
 public class ExpenseController {
     @Autowired
     private ExpenseService expenseService;
-
+    @PreAuthorize("hasRole('Admin')")
     @GetMapping("/expenses")
     public Page<Expense> getAllExpenses(Pageable page) {
         return expenseService.getAllExpenses(page);

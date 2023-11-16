@@ -9,26 +9,25 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
+import java.util.Set;
 
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "tbl_users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="user_id")
+@Table(name = "tbl_user_roles")
+public class UserRoles {
+    public UserRoles(String roleName) {
+        this.roleName = roleName;
+    }
+
+    @jakarta.persistence.Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="role_id")
     private long Id;
-    private String name;
 
     @Column(unique = true)
-    private String email;
-
-    @JsonIgnore
-    private String password;
-
-    private Long age;
+    private String roleName;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
@@ -38,7 +37,8 @@ public class User {
     @UpdateTimestamp
     private Timestamp updatedAt;
 
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name="role_id")
-    private UserRoles userRole;
+   @OneToMany(mappedBy = "userRole")
+   @JsonIgnore
+    private Set<User> user;
+
 }
